@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en" id="top">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="author" content="Alejandro Montalvo" />
+    <meta name="description" content="A simple and secure password generator.">
+    <meta name="color-scheme" content="dark light">
+    <title>Secure Password Generator</title>
+    <!-- Favicon -->
+    <link rel="shortcut icon" type="image/svg" href="./imgs/favicon.svg" />
+    <link rel="stylesheet" href="./styles.css" media="screen" />
+    <script src="./scripts.js" type="text/javascript"></script>
+</head>
+
+<body>
+    <div id="content_container">
+        <h1>Secure Password Generator</h1>
+        <div style="display:flex;
+  flex-direction:row; height: 2rem; margin-bottom: 1rem; height: 100%;">
+            <input type="text" id="password_input" name="password_input">
+            <button id="password_copy" title="Copy Password"><img src="./imgs/copy.svg" alt="Girl in a jacket"></button>
+        </div>
+        <button id="password_button">Generate New Password</button><br>
+        <button id="settings_button">
+            <img src="./imgs/cog.svg" height="22rem" alt="Girl in a jacket"> Settings
+        </button>
+        <div id="settings_container">
+            <div id="settings_labels">
+                <label for="password_length">Password Length:</label><br>
+                <label for="include_lowercase_letters">Include Lowercase Letters:</label></br>
+                <label for="include_uppercase_letters">Include Uppercase Letters:</label></br>
+                <label for="include_numbers">Include Numbers:</label></br>
+                <label for="include_symbols">Include Symbols:</label><br>
+                <label for="exclude_similar_characters">Exclude Similar Characters:</label><br>
+                <label for="include_specific_characters">Include Specific Characters:</label><br>
+                <label for="exclude_specific_characters">Exclude Specific Characters:</label><br>
+                <label for="exclude_specific_characters">Auto-Select Password:</label><br>
+                <label for="save_settings">Save Settings to LocalStorage:</label><br>
+            </div>
+            <div id="settings_variables">
+                <!-- Password Length Input-->
+                <input type="number" id="password_length" name="password_length" value="16"><br>
+                <!-- Lowercase Letters Checkbox -->
+                <input type="checkbox" id="include_lowercase_letters" name="include_lowercase_letters" checked>
+                <label for="include_lowercase_letters">( e.g. abcdefghijklmnopqrstuvwxyz )</label><br>
+                <!-- Uppercase Letters Checkbox -->
+                <input type="checkbox" id="include_uppercase_letters" name="include_uppercase_letters" checked>
+                <label for="include_uppercase_letters">( e.g. ABCDEFGHIJKLMNOPQRSTUVWXYZ )</label><br>
+                <!-- Numbers Checkbox -->
+                <input type="checkbox" id="include_numbers" name="include_numbers" checked>
+                <label for="include_numbers">( e.g. 1234567890 )</label><br>
+                <!-- Symbols Checkbox -->
+                <input type="checkbox" id="include_symbols" name="include_symbols" checked>
+                <label for="include_symbols">( e.g. !@#$% )</label><br>
+                <!-- Exclude Similar Checkbox -->
+                <input type="checkbox" id="exclude_similar_characters" name="exclude_similar_characters">
+                <label for="exclude_similar_characters">( e.g. 1il5S8BoO0 )</label><br>
+                <!-- Include Characters Input -->
+                <input type="text" id="include_specific_characters" name="include_specific_characters"
+                    placeholder="Seperate with spaces"><br>
+                <!-- Exclude Characters Input -->
+                <input type="text" id="exclude_specific_characters" name="exclude_specific_characters"
+                    placeholder="Seperate with spaces"><br>
+                <!-- Select Password Checkbox -->
+                <input type="checkbox" id="select_password" name="select_password" checked>
+                <label for="select_password">Select generated password automatically.</label><br>
+                <input type="checkbox" id="save_settings" name="save_settings">
+                <label for="save_settings">Save all settings to this machine.</label><br>
+            </div>
+        </div>
+        <p>Generated passwords are not stored. Local storage is used to save
+            settings accross sessions.</p>
+    </div>
+</body>

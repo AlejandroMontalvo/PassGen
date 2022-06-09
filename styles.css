@@ -1,0 +1,108 @@
+body {
+  padding: 2rem;
+  margin: 0px;
+  font-family: sans-serif;
+  background: #121212;
+}
+
+input:focus,
+select:focus,
+textarea:focus,
+button:focus {
+  outline: none;
+}
+
+#content_container {
+  width: 700px;
+  height: fit-content;
+  padding: 10px 20px;
+  margin: 0 auto;
+  background-color: #1d1d1d;
+  border-radius: 0.5rem;
+  text-align: center;
+}
+
+#password_input {
+  width: 100%;
+  height: 100%;
+  font-size: 18px;
+  padding: 0.5rem;
+  box-sizing: border-box;
+  border: 1px solid #444444;
+  border-right: none;
+  background: #121212;
+  border-radius: 0.3rem 0rem 0rem 0.3rem;
+}
+
+#password_copy {
+  border-radius: 0rem 0.3rem 0.3rem 0rem;
+  border: 1px solid #444444;
+  border-left: none;
+  background: #121212;
+  box-sizing: border-box;
+  cursor: pointer;
+  padding-right: 0.5rem;
+  padding-top: 0.3rem;
+}
+
+#password_copy img {
+  opacity: 0.4;
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+#password_copy:hover img {
+  opacity: 1;
+}
+
+#password_button {
+  font-size: 16px;
+  border: 1px solid #444444;
+  background: #121212;
+  box-sizing: border-box;
+  padding: 0.5rem 0.5rem;
+  cursor: pointer;
+  border-radius: 0.3rem;
+}
+
+#settings_button {
+  border: none;
+  background: transparent;
+  margin: 1rem;
+  font-size: 28px;
+  cursor: pointer;
+}
+
+#settings_container {
+  margin-left: -20px;
+  margin-right: -20px;
+  padding-left: 20px;
+  padding-right: 20px;
+  width: 100%;
+  height: 0px;
+  background: #2e2e2e;
+  overflow: hidden;
+  transition: height 0.1s ease 0.1s;
+}
+
+#settings_labels {
+  display: inline-block;
+  width: 40%;
+  text-align: left;
+  margin-top: 1rem;
+}
+
+#settings_labels > * {
+  margin-bottom: 0.8rem;
+}
+
+#settings_variables {
+  display: inline-block;
+  text-align: left;
+  width: fit-content;
+}
+
+#settings_variables > * {
+  margin-bottom: 0.75rem;
+  padding: 0px;
+}
