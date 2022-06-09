@@ -1,5 +1,4 @@
 body {
-  padding: 2rem;
   margin: 0px;
   font-family: sans-serif;
   background: #121212;
@@ -17,6 +16,7 @@ button:focus {
   height: fit-content;
   padding: 10px 20px;
   margin: 0 auto;
+  margin-top: 6rem;
   background-color: #1d1d1d;
   border-radius: 0.5rem;
   text-align: center;
@@ -56,21 +56,31 @@ button:focus {
 }
 
 #password_button {
-  font-size: 16px;
+  font-size: 18px;
   border: 1px solid #444444;
-  background: #121212;
+  background: transparent;
   box-sizing: border-box;
-  padding: 0.5rem 0.5rem;
+  padding: 0.5rem 1rem;
   cursor: pointer;
   border-radius: 0.3rem;
+}
+
+#password_button:hover {
+  background: #121212;
 }
 
 #settings_button {
   border: none;
   background: transparent;
-  margin: 1rem;
-  font-size: 28px;
+  margin: 0.5rem;
+  padding: 1rem;
+  font-size: 24px;
   cursor: pointer;
+}
+
+#settings_button:hover {
+  background: #2e2e2e;
+  border-radius: 0.3rem;
 }
 
 #settings_container {

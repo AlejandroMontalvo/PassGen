@@ -10,8 +10,8 @@
     <title>Secure Password Generator</title>
     <!-- Favicon -->
     <link rel="shortcut icon" type="image/svg" href="./imgs/favicon.svg" />
-    <link rel="stylesheet" href="./styles.css" media="screen" />
-    <script src="./scripts.js" type="text/javascript"></script>
+    <link rel="stylesheet" href="./style.css" media="screen" />
+    <script src="./script.js" type="text/javascript"></script>
 </head>
 
 <body>
@@ -19,12 +19,13 @@
         <h1>Secure Password Generator</h1>
         <div style="display:flex;
   flex-direction:row; height: 2rem; margin-bottom: 1rem; height: 100%;">
-            <input type="text" id="password_input" name="password_input">
-            <button id="password_copy" title="Copy Password"><img src="./imgs/copy.svg" alt="Girl in a jacket"></button>
+            <input type="text" id="password_input" name="password_input"
+                placeholder="Click the button below to generate a password">
+            <button id="password_copy" title="Copy Password"><img src="./imgs/copy.svg" alt="Copy Password"></button>
         </div>
         <button id="password_button">Generate New Password</button><br>
         <button id="settings_button">
-            <img src="./imgs/cog.svg" height="22rem" alt="Girl in a jacket"> Settings
+            <img src="./imgs/cog.svg" style="top: 1rem;" width="22rem" alt="Settings Cog"> Settings
         </button>
         <div id="settings_container">
             <div id="settings_labels">
@@ -37,7 +38,7 @@
                 <label for="include_specific_characters">Include Specific Characters:</label><br>
                 <label for="exclude_specific_characters">Exclude Specific Characters:</label><br>
                 <label for="exclude_specific_characters">Auto-Select Password:</label><br>
-                <label for="save_settings">Save Settings to LocalStorage:</label><br>
+                <label for="save_settings">Save Settings to Local Storage:</label><br>
             </div>
             <div id="settings_variables">
                 <!-- Password Length Input-->
@@ -66,11 +67,14 @@
                 <!-- Select Password Checkbox -->
                 <input type="checkbox" id="select_password" name="select_password" checked>
                 <label for="select_password">Select generated password automatically.</label><br>
+                <!-- Save Settings Checkbox -->
                 <input type="checkbox" id="save_settings" name="save_settings">
                 <label for="save_settings">Save all settings to this machine.</label><br>
             </div>
         </div>
         <p>Generated passwords are not stored. Local storage is used to save
-            settings accross sessions.</p>
+            settings across sessions.</p>
+        <a href="https://github.com/AlejandroMontalvo/secure-password-generator" title="Github Repository"><img
+                width="35px" src="./imgs/github.svg" alt="Github Repository"></a>
     </div>
 </body>
