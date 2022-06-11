@@ -11,6 +11,7 @@ textarea:focus {
 }
 
 #content_container {
+  color: white;
   width: 48rem;
   height: fit-content;
   padding: 0.8rem 1.2rem;
@@ -32,6 +33,7 @@ textarea:focus {
   border-right: none;
   background: #121212;
   border-radius: 0.3rem 0rem 0rem 0.3rem;
+  color: white;
 }
 
 #password_copy {
@@ -63,6 +65,7 @@ textarea:focus {
   padding: 0.5rem 1rem;
   cursor: pointer;
   border-radius: 0.3rem;
+  color: white;
 }
 
 #password_button:hover {
@@ -76,6 +79,7 @@ textarea:focus {
   padding: 1rem;
   font-size: 1.5rem;
   cursor: pointer;
+  color: white;
 }
 
 #settings_button:hover {
@@ -100,6 +104,7 @@ textarea:focus {
   width: 40%;
   text-align: left;
   margin-top: 1rem;
+  color: white;
 }
 
 #settings_labels > * {
@@ -110,6 +115,7 @@ textarea:focus {
   display: inline-block;
   text-align: left;
   width: fit-content;
+  color: white;
 }
 
 #settings_variables > * {
