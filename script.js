@@ -1,9 +1,11 @@
 window.onload = function () {
+  // Main variables
   let passwordInput = document.getElementById("password_input"),
     passwordGenerateButton = document.getElementById("password_button"),
     passwordCopyButton = document.getElementById("password_copy"),
     settingsButton = document.getElementById("settings_button");
 
+  // Settings variables
   let passwordLength = document.getElementById("password_length"),
     includeLowercaseLetters = document.getElementById(
       "include_lowercase_letters"
@@ -51,17 +53,19 @@ window.onload = function () {
     }
   });
 
+  // Settings button logic
   let settingsToggle = false;
   settingsButton.addEventListener("click", function () {
     if (settingsToggle == false) {
       settingsToggle = true;
-      document.getElementById("settings_container").style.height = "20.5rem";
+      document.getElementById("settings_container").style.height = "21rem";
     } else {
       settingsToggle = false;
       document.getElementById("settings_container").style.height = "0rem";
     }
   });
 
+  // If enabled, save settings to local storage before page/browser close
   window.addEventListener(
     "beforeunload",
     function () {
@@ -85,6 +89,7 @@ window.onload = function () {
     false
   );
 
+  // If local storage has data, get saved settings, else fall back to defualt settings
   if (localStorage.length > 0) {
     getSettings(
       passwordLength,
@@ -114,6 +119,7 @@ window.onload = function () {
   }
 };
 
+// Determine which characters are available for generation based on user settings
 function availablePasswordCharacters(
   includeLowercaseLetters,
   includeUppercaseLetters,
