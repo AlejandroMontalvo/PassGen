@@ -1,6 +1,6 @@
 # ![Alt Text](./imgs/SecurePasswordGenerator.png)
 
-This is my own implementation of a secure password generator using HTML, CSS, and vanilla JavaScript. Everything is handled clientside, meaning that nothing is ever sent back to the server. [Here](https://alejandromontalvo.github.io/secure-password-generator/) it is in action.
+This is my own implementation of a secure password generator using HTML, CSS, and vanilla JavaScript. Everything is handled clientside, meaning that no data is sent back to the server. [Here](https://alejandromontalvo.github.io/secure-password-generator/) it is in action.
 
 # Overview
 
