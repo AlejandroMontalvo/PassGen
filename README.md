@@ -1,6 +1,6 @@
 # ![Alt Text](./imgs/SecurePasswordGenerator.png)
 
-This is my own implementation of a secure password generator using HTML, CSS, and vanilla JavaScript. Everything is handled clientside, meaning that nothing is ever sent back to the server. To use the generator, I suggest you either use it here, or download it and run it yourself.
+This is my own implementation of a secure password generator using HTML, CSS, and vanilla JavaScript. Everything is handled clientside, meaning that nothing is ever sent back to the server. [Here](https://github.com/AlejandroMontalvo/secure-password-generator/blob/main/LICENSE) it is in action.
 
 # Overview
 
@@ -18,4 +18,4 @@ All images are stored within the `img` file directory.
 
 # License
 
-This project is licensed under [MIT](https://github.com/AlejandroMontalvo/secure-password-generator/blob/main/LICENSE).
+This project is licensed under [MIT](https://alejandromontalvo.github.io/secure-password-generator/).
