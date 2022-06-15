@@ -97,28 +97,31 @@ textarea:focus {
   background: #2e2e2e;
   overflow: hidden;
   transition: height 0.1s ease 0.1s;
+  vertical-align: top;
+  display: flex;
+  align-items: center;
 }
 
 #settings_labels {
-  display: inline-block;
-  width: 50%;
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: space-between;
   text-align: left;
-  margin-top: 1rem;
   color: white;
-}
-
-#settings_labels > * {
-  margin-bottom: 0.8rem;
+  height: 90%;
+  width: 45%;
+  margin: 0 auto;
 }
 
 #settings_variables {
-  display: inline-block;
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: space-between;
   text-align: left;
   width: fit-content;
   color: white;
-}
-
-#settings_variables > * {
-  margin-bottom: 0.75rem;
-  padding: 0px;
+  vertical-align: middle;
+  height: 90%;
+  width: 50%;
+  margin: 0 auto;
 }

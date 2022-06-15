@@ -58,7 +58,7 @@ window.onload = function () {
   settingsButton.addEventListener("click", function () {
     if (settingsToggle == false) {
       settingsToggle = true;
-      document.getElementById("settings_container").style.height = "21rem";
+      document.getElementById("settings_container").style.height = "20rem";
     } else {
       settingsToggle = false;
       document.getElementById("settings_container").style.height = "0rem";
