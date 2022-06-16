@@ -120,7 +120,7 @@ window.onload = function () {
 };
 
 // Determine which characters are available for generation based on user settings
-function availablePasswordCharacters(
+function generateCharacterString(
   includeLowercaseLetters,
   includeUppercaseLetters,
   includeNumbers,
@@ -129,57 +129,67 @@ function availablePasswordCharacters(
   includeSpecificCharacters,
   excludeSpecificCharacters
 ) {
-  let selectedPasswordCharacters = "";
+  let generatedString = "";
 
-  let lowercaseLetters = "abcdefghijklmnopqrstuvwxyz",
+  const lowercaseLetters = "abcdefghijklmnopqrstuvwxyz",
     uppercaseLetters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
     numbers = "1234567890",
     symbols = "!@#$%",
     similarCharactersArray = ["1", "i", "l", "5", "S", "8", "B", "o", "O", "0"];
 
   if (includeLowercaseLetters.checked) {
-    selectedPasswordCharacters += lowercaseLetters;
+    generatedString += lowercaseLetters;
   }
 
   if (includeUppercaseLetters.checked) {
-    selectedPasswordCharacters += uppercaseLetters;
+    generatedString += uppercaseLetters;
   }
 
   if (includeNumbers.checked) {
-    selectedPasswordCharacters += numbers;
+    generatedString += numbers;
   }
 
   if (includeSymbols.checked) {
-    selectedPasswordCharacters += symbols;
+    generatedString += symbols;
   }
 
   if (excludeSimilarCharacters.checked) {
     for (var i = 0; i < similarCharactersArray.length; i++) {
-      selectedPasswordCharacters = selectedPasswordCharacters.replace(
-        similarCharactersArray[i],
-        ""
-      );
+      generatedString = generatedString.replace(similarCharactersArray[i], "");
     }
   }
 
   if (includeSpecificCharacters.value) {
     let includeCharactersArray = includeSpecificCharacters.value.split(" ");
     for (var i = 0; i < includeCharactersArray.length; i++) {
-      selectedPasswordCharacters += includeCharactersArray[i];
+      generatedString += includeCharactersArray[i];
     }
   }
 
   if (excludeSpecificCharacters.value) {
     let excludeCharactersArray = excludeSpecificCharacters.value.split(" ");
     for (var i = 0; i < excludeCharactersArray.length; i++) {
-      selectedPasswordCharacters = selectedPasswordCharacters.replace(
-        excludeCharactersArray[i],
-        ""
-      );
+      generatedString = generatedString.replace(excludeCharactersArray[i], "");
     }
   }
 
-  return selectedPasswordCharacters;
+  return generatedString;
+}
+
+function checkGeneratedPassword(generatedPassword, includeSpecificCharacters) {
+  let includeCharactersArray = includeSpecificCharacters.value.split(" ");
+  let includedCharacters = 0;
+  for (let i = 0; i < generatedPassword.length; i++) {
+    if (generatedPassword.includes(includeCharactersArray[i])) {
+      includedCharacters++;
+    }
+  }
+
+  if (includedCharacters === includeCharactersArray.length) {
+    return true;
+  } else {
+    return false;
+  }
 }
 
 function generatePassword(
@@ -192,7 +202,7 @@ function generatePassword(
   includeSpecificCharacters,
   excludeSpecificCharacters
 ) {
-  let passwordCharacters = availablePasswordCharacters(
+  let passwordCharacters = generateCharacterString(
       includeLowercaseLetters,
       includeUppercaseLetters,
       includeNumbers,
@@ -203,10 +213,36 @@ function generatePassword(
     ),
     generatedPassword = "";
 
-  for (var i = 0; i < passwordLength.value; ++i) {
+  for (let i = 0; i < passwordLength.value; ++i) {
     generatedPassword += passwordCharacters.charAt(
       Math.random() * passwordCharacters.length
     );
+  }
+
+  if (includeSpecificCharacters.value) {
+    let includeCharactersArray = includeSpecificCharacters.value.split(" ");
+    let generatedPasswordArray = generatedPassword.split("");
+    let previousArrayPosition = [];
+
+    for (let i = 0; i < includeCharactersArray.length; i++) {
+      let randomArrayPosition = Math.floor(
+        Math.random() * generatedPasswordArray.length
+      );
+
+      if (previousArrayPosition.includes(randomArrayPosition)) {
+        for (let j = 0; j < generatedPasswordArray.length; j++) {
+          if (!previousArrayPosition.includes(j)) {
+            randomArrayPosition = j;
+          }
+        }
+      }
+
+      generatedPassword = generatedPassword.replace(
+        generatedPasswordArray[randomArrayPosition],
+        includeCharactersArray[i].toString()
+      );
+      previousArrayPosition.push(randomArrayPosition);
+    }
   }
 
   return generatedPassword;
