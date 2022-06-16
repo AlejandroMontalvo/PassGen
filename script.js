@@ -176,22 +176,6 @@ function generateCharacterString(
   return generatedString;
 }
 
-function checkGeneratedPassword(generatedPassword, includeSpecificCharacters) {
-  let includeCharactersArray = includeSpecificCharacters.value.split(" ");
-  let includedCharacters = 0;
-  for (let i = 0; i < generatedPassword.length; i++) {
-    if (generatedPassword.includes(includeCharactersArray[i])) {
-      includedCharacters++;
-    }
-  }
-
-  if (includedCharacters === includeCharactersArray.length) {
-    return true;
-  } else {
-    return false;
-  }
-}
-
 function generatePassword(
   passwordLength,
   includeLowercaseLetters,
