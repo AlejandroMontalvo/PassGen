@@ -27,17 +27,21 @@ window.onload = function () {
     autoSelectPassword = document.getElementById("select_password"),
     saveSettings = document.getElementById("save_settings");
 
+  let settingsArray = [
+    passwordLength, //0
+    includeLowercaseLetters, //1
+    includeUppercaseLetters, //2
+    includeNumbers, //3
+    includeSymbols, //4
+    excludeSimilarCharacters, //5
+    includeSpecificCharacters, //6
+    excludeSpecificCharacters, //7
+    autoSelectPassword, //8
+    saveSettings, //9
+  ];
+
   passwordGenerateButton.addEventListener("click", function () {
-    passwordInput.value = generatePassword(
-      passwordLength,
-      includeLowercaseLetters,
-      includeUppercaseLetters,
-      includeNumbers,
-      includeSymbols,
-      excludeSimilarCharacters,
-      includeSpecificCharacters,
-      excludeSpecificCharacters
-    );
+    passwordInput.value = generatePassword(settingsArray);
 
     if (autoSelectPassword.checked) {
       passwordInput.select();
@@ -70,18 +74,7 @@ window.onload = function () {
     "beforeunload",
     function () {
       if (saveSettings.checked) {
-        setSettings(
-          passwordLength,
-          includeLowercaseLetters,
-          includeUppercaseLetters,
-          includeNumbers,
-          includeSymbols,
-          excludeSimilarCharacters,
-          includeSpecificCharacters,
-          excludeSpecificCharacters,
-          autoSelectPassword,
-          saveSettings
-        );
+        setSettings(settingsArray);
       } else {
         localStorage.clear();
       }
@@ -91,44 +84,14 @@ window.onload = function () {
 
   // If local storage has data, get saved settings, else fall back to defualt settings
   if (localStorage.length > 0) {
-    getSettings(
-      passwordLength,
-      includeLowercaseLetters,
-      includeUppercaseLetters,
-      includeNumbers,
-      includeSymbols,
-      excludeSimilarCharacters,
-      includeSpecificCharacters,
-      excludeSpecificCharacters,
-      autoSelectPassword,
-      saveSettings
-    );
+    getSettings(settingsArray);
   } else {
-    setDefaultSettings(
-      passwordLength,
-      includeLowercaseLetters,
-      includeUppercaseLetters,
-      includeNumbers,
-      includeSymbols,
-      excludeSimilarCharacters,
-      includeSpecificCharacters,
-      excludeSpecificCharacters,
-      autoSelectPassword,
-      saveSettings
-    );
+    setDefaultSettings(settingsArray);
   }
 };
 
 // Determine which characters are available for generation based on user settings
-function generateCharacterString(
-  includeLowercaseLetters,
-  includeUppercaseLetters,
-  includeNumbers,
-  includeSymbols,
-  excludeSimilarCharacters,
-  includeSpecificCharacters,
-  excludeSpecificCharacters
-) {
+function generateCharacterString(settingsArray) {
   let generatedString = "";
 
   const lowercaseLetters = "abcdefghijklmnopqrstuvwxyz",
@@ -137,37 +100,37 @@ function generateCharacterString(
     symbols = "!@#$%",
     similarCharactersArray = ["1", "i", "l", "5", "S", "8", "B", "o", "O", "0"];
 
-  if (includeLowercaseLetters.checked) {
+  if (settingsArray[1].checked) {
     generatedString += lowercaseLetters;
   }
 
-  if (includeUppercaseLetters.checked) {
+  if (settingsArray[2].checked) {
     generatedString += uppercaseLetters;
   }
 
-  if (includeNumbers.checked) {
+  if (settingsArray[3].checked) {
     generatedString += numbers;
   }
 
-  if (includeSymbols.checked) {
+  if (settingsArray[4].checked) {
     generatedString += symbols;
   }
 
-  if (excludeSimilarCharacters.checked) {
+  if (settingsArray[5].checked) {
     for (var i = 0; i < similarCharactersArray.length; i++) {
       generatedString = generatedString.replace(similarCharactersArray[i], "");
     }
   }
 
-  if (includeSpecificCharacters.value) {
-    let includeCharactersArray = includeSpecificCharacters.value.split(" ");
+  if (settingsArray[6].value) {
+    let includeCharactersArray = settingsArray[6].value.split(" ");
     for (var i = 0; i < includeCharactersArray.length; i++) {
       generatedString += includeCharactersArray[i];
     }
   }
 
-  if (excludeSpecificCharacters.value) {
-    let excludeCharactersArray = excludeSpecificCharacters.value.split(" ");
+  if (settingsArray[7].value) {
+    let excludeCharactersArray = settingsArray[7].value.split(" ");
     for (var i = 0; i < excludeCharactersArray.length; i++) {
       generatedString = generatedString.replace(excludeCharactersArray[i], "");
     }
@@ -176,35 +139,18 @@ function generateCharacterString(
   return generatedString;
 }
 
-function generatePassword(
-  passwordLength,
-  includeLowercaseLetters,
-  includeUppercaseLetters,
-  includeNumbers,
-  includeSymbols,
-  excludeSimilarCharacters,
-  includeSpecificCharacters,
-  excludeSpecificCharacters
-) {
-  let passwordCharacters = generateCharacterString(
-      includeLowercaseLetters,
-      includeUppercaseLetters,
-      includeNumbers,
-      includeSymbols,
-      excludeSimilarCharacters,
-      includeSpecificCharacters,
-      excludeSpecificCharacters
-    ),
+function generatePassword(settingsArray) {
+  let passwordCharacters = generateCharacterString(settingsArray),
     generatedPassword = "";
 
-  for (let i = 0; i < passwordLength.value; ++i) {
+  for (let i = 0; i < settingsArray[0].value; ++i) {
     generatedPassword += passwordCharacters.charAt(
       Math.random() * passwordCharacters.length
     );
   }
 
-  if (includeSpecificCharacters.value) {
-    let includeCharactersArray = includeSpecificCharacters.value.split(" ");
+  if (settingsArray[6].value) {
+    let includeCharactersArray = settingsArray[6].value.split(" ");
     let generatedPasswordArray = generatedPassword.split("");
     let previousArrayPosition = [];
 
@@ -220,7 +166,6 @@ function generatePassword(
           }
         }
       }
-
       generatedPassword = generatedPassword.replace(
         generatedPasswordArray[randomArrayPosition],
         includeCharactersArray[i].toString()
@@ -232,114 +177,45 @@ function generatePassword(
   return generatedPassword;
 }
 
-function setSettings(
-  passwordLength,
-  includeLowercaseLetters,
-  includeUppercaseLetters,
-  includeNumbers,
-  includeSymbols,
-  excludeSimilarCharacters,
-  includeSpecificCharacters,
-  excludeSpecificCharacters,
-  autoSelectPassword,
-  saveSettings
-) {
-  localStorage.setItem("passwordLength", passwordLength.value);
-
-  localStorage.setItem(
-    "includeLowercaseLetters",
-    includeLowercaseLetters.checked
-  );
-
-  localStorage.setItem(
-    "includeUppercaseLetters",
-    includeUppercaseLetters.checked
-  );
-
-  localStorage.setItem("includeNumbers", includeNumbers.checked);
-
-  localStorage.setItem("includeSymbols", includeSymbols.checked);
-
-  localStorage.setItem(
-    "excludeSimilarCharacters",
-    excludeSimilarCharacters.checked
-  );
-
-  localStorage.setItem(
-    "includeSpecificCharacters",
-    includeSpecificCharacters.value
-  );
-
-  localStorage.setItem(
-    "excludeSpecificCharacters",
-    excludeSpecificCharacters.value
-  );
-
-  localStorage.setItem("autoSelectPassword", autoSelectPassword.checked);
-
-  localStorage.setItem("saveSettings", saveSettings.checked);
+function setSettings(settingsArray) {
+  localStorage.setItem("passwordLength", settingsArray[0].value);
+  localStorage.setItem("includeLowercaseLetters", settingsArray[1].checked);
+  localStorage.setItem("includeUppercaseLetters", settingsArray[2].checked);
+  localStorage.setItem("includeNumbers", settingsArray[3].checked);
+  localStorage.setItem("includeSymbols", settingsArray[4].checked);
+  localStorage.setItem("excludeSimilarCharacters", settingsArray[5].checked);
+  localStorage.setItem("includeSpecificCharacters", settingsArray[6].value);
+  localStorage.setItem("excludeSpecificCharacters", settingsArray[7].value);
+  localStorage.setItem("autoSelectPassword", settingsArray[8].checked);
+  localStorage.setItem("saveSettings", settingsArray[9].checked);
 }
 
-function getSettings(
-  passwordLength,
-  includeLowercaseLetters,
-  includeUppercaseLetters,
-  includeNumbers,
-  includeSymbols,
-  excludeSimilarCharacters,
-  includeSpecificCharacters,
-  excludeSpecificCharacters,
-  autoSelectPassword,
-  saveSettings
-) {
-  passwordLength.value = localStorage.getItem("passwordLength");
-
-  includeLowercaseLetters.checked =
+function getSettings(settingsArray) {
+  settingsArray[0].value = localStorage.getItem("passwordLength");
+  settingsArray[1].checked =
     localStorage.getItem("includeLowercaseLetters") === "true";
-
-  includeUppercaseLetters.checked =
+  settingsArray[2].checked =
     localStorage.getItem("includeUppercaseLetters") === "true";
-
-  includeNumbers.checked = localStorage.getItem("includeNumbers") === "true";
-
-  includeSymbols.checked = localStorage.getItem("includeSymbols") === "true";
-
-  excludeSimilarCharacters.checked =
+  settingsArray[3].checked = localStorage.getItem("includeNumbers") === "true";
+  settingsArray[4].checked = localStorage.getItem("includeSymbols") === "true";
+  settingsArray[5].checked =
     localStorage.getItem("excludeSimilarCharacters") === "true";
-
-  includeSpecificCharacters.value = localStorage.getItem(
-    "includeSpecificCharacters"
-  );
-
-  excludeSpecificCharacters.value = localStorage.getItem(
-    "excludeSpecificCharacters"
-  );
-
-  autoSelectPassword.checked =
+  settingsArray[6].value = localStorage.getItem("includeSpecificCharacters");
+  settingsArray[7].value = localStorage.getItem("excludeSpecificCharacters");
+  settingsArray[8].checked =
     localStorage.getItem("autoSelectPassword") === "true";
-  saveSettings.checked = localStorage.getItem("saveSettings") === "true";
+  settingsArray[9].checked = localStorage.getItem("saveSettings") === "true";
 }
 
-function setDefaultSettings(
-  passwordLength,
-  includeLowercaseLetters,
-  includeUppercaseLetters,
-  includeNumbers,
-  includeSymbols,
-  excludeSimilarCharacters,
-  includeSpecificCharacters,
-  excludeSpecificCharacters,
-  autoSelectPassword,
-  saveSettings
-) {
-  passwordLength.value = 16;
-  includeLowercaseLetters.checked = true;
-  includeUppercaseLetters.checked = true;
-  includeNumbers.checked = true;
-  includeSymbols.checked = true;
-  excludeSimilarCharacters.checked = false;
-  includeSpecificCharacters.value = "";
-  excludeSpecificCharacters.value = "";
-  autoSelectPassword.checked = true;
-  saveSettings.checked = false;
+function setDefaultSettings(settingsArray) {
+  settingsArray[0].value = 16;
+  settingsArray[1].checked = true;
+  settingsArray[2].checked = true;
+  settingsArray[3].checked = true;
+  settingsArray[4].checked = true;
+  settingsArray[5].checked = false;
+  settingsArray[6].value = "";
+  settingsArray[7].value = "";
+  settingsArray[8].checked = true;
+  settingsArray[9].checked = false;
 }
