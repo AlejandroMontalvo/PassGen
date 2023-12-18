@@ -1,12 +1,11 @@
 window.onload = function () {
   // Main variables
-  let passwordInput = document.getElementById("password_input"),
+  const passwordInput = document.getElementById("password_input"),
     passwordGenerateButton = document.getElementById("password_button"),
-    passwordCopyButton = document.getElementById("password_copy"),
     settingsButton = document.getElementById("settings_button");
 
   // Settings variables
-  let passwordLength = document.getElementById("password_length"),
+  const passwordLength = document.getElementById("password_length"),
     includeLowercaseLetters = document.getElementById(
       "include_lowercase_letters"
     ),
@@ -24,7 +23,6 @@ window.onload = function () {
     excludeSpecificCharacters = document.getElementById(
       "exclude_specific_characters"
     ),
-    autoSelectPassword = document.getElementById("select_password"),
     saveSettings = document.getElementById("save_settings");
 
   let settingsArray = [
@@ -36,24 +34,42 @@ window.onload = function () {
     excludeSimilarCharacters, //5
     includeSpecificCharacters, //6
     excludeSpecificCharacters, //7
-    autoSelectPassword, //8
-    saveSettings, //9
+    saveSettings, //8
   ];
+
+  passwordInput.value = generatePassword(settingsArray);
 
   passwordGenerateButton.addEventListener("click", function () {
     passwordInput.value = generatePassword(settingsArray);
-
-    if (autoSelectPassword.checked) {
-      passwordInput.select();
-    }
   });
 
-  passwordCopyButton.addEventListener("click", function () {
-    navigator.clipboard.writeText(passwordInput.value);
+  // Add click event listener to password input
+  passwordInput.addEventListener("click", function () {
+    copyPasswordToClipboard();
+  });
+
+  // Function to copy password to clipboard
+  let copiedPopup = document.getElementById("copied_popup");
+
+  passwordInput.addEventListener("click", function (event) {
     if (passwordInput.value) {
-      alert("Password Copied!");
-    } else {
-      alert("Generate a password first!");
+      navigator.clipboard.writeText(passwordInput.value);
+      // Calculate the position based on the mouse coordinates
+      let mouseX = event.clientX;
+      let mouseY = event.clientY;
+
+      // Set the position of the copied popup
+      copiedPopup.style.left = mouseX + 15 + "px"; // Adjust the offset as needed
+      copiedPopup.style.top = mouseY + -25 + "px";
+
+      copiedPopup.style.display = "block";
+      copiedPopup.addEventListener(
+        "animationend",
+        function () {
+          copiedPopup.style.display = "none";
+        },
+        { once: true }
+      ); // Ensure the event listener only runs once
     }
   });
 
@@ -186,8 +202,7 @@ function setSettings(settingsArray) {
   localStorage.setItem("excludeSimilarCharacters", settingsArray[5].checked);
   localStorage.setItem("includeSpecificCharacters", settingsArray[6].value);
   localStorage.setItem("excludeSpecificCharacters", settingsArray[7].value);
-  localStorage.setItem("autoSelectPassword", settingsArray[8].checked);
-  localStorage.setItem("saveSettings", settingsArray[9].checked);
+  localStorage.setItem("saveSettings", settingsArray[8].checked);
 }
 
 function getSettings(settingsArray) {
@@ -202,9 +217,7 @@ function getSettings(settingsArray) {
     localStorage.getItem("excludeSimilarCharacters") === "true";
   settingsArray[6].value = localStorage.getItem("includeSpecificCharacters");
   settingsArray[7].value = localStorage.getItem("excludeSpecificCharacters");
-  settingsArray[8].checked =
-    localStorage.getItem("autoSelectPassword") === "true";
-  settingsArray[9].checked = localStorage.getItem("saveSettings") === "true";
+  settingsArray[8].checked = localStorage.getItem("saveSettings") === "true";
 }
 
 function setDefaultSettings(settingsArray) {
@@ -216,6 +229,5 @@ function setDefaultSettings(settingsArray) {
   settingsArray[5].checked = false;
   settingsArray[6].value = "";
   settingsArray[7].value = "";
-  settingsArray[8].checked = true;
-  settingsArray[9].checked = false;
+  settingsArray[8].checked = false;
 }
