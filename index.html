@@ -25,7 +25,7 @@
         <button id="password_button">Generate Password</button><br>
         <div id="settings_variables">
             <!-- Password Length Input-->
-            <div>
+            <div class="settingContainer">
                 <label for="password_length">Password Length</label>
 
                 <input type="number" id="password_length" name="password_length" value="16">
@@ -40,7 +40,7 @@
                 </label>
             </div>
             <!-- Uppercase Letters Checkbox -->
-            <div class="checkbox">
+            <div class="settingContainer checkbox">
                 <label for="include_uppercase_letters">Include uppercase letters</label>
                 <label class="switch">
                     <input type="checkbox" id="include_uppercase_letters" name="include_uppercase_letters" checked>
@@ -48,7 +48,7 @@
                 </label>
             </div>
             <!-- Numbers Checkbox -->
-            <div class="checkbox">
+            <div class="settingContainer checkbox">
                 <label for="include_numbers">Include numbers</label>
                 <label class="switch">
                     <input type="checkbox" id="include_numbers" name="include_numbers" checked>
@@ -56,7 +56,7 @@
                 </label>
             </div>
             <!-- Symbols Checkbox -->
-            <div class="checkbox">
+            <div class="settingContainer checkbox">
                 <label for="include_symbols">Include symbols</label>
                 <label class="switch">
                     <input type="checkbox" id="include_symbols" name="include_symbols" checked>
@@ -64,7 +64,7 @@
                 </label>
             </div>
             <!-- Exclude Similar Checkbox -->
-            <div class="checkbox">
+            <div class="settingContainer checkbox">
                 <label for="exclude_similar_characters">Exclude similar characters ( e.g. 1il5S8BO0 )</label>
                 <label class="switch">
                     <input type="checkbox" id="exclude_similar_characters" name="exclude_similar_characters" checked>
@@ -72,19 +72,19 @@
                 </label>
             </div>
             <!-- Include Characters Input -->
-            <div>
+            <div class="settingContainer">
                 <label for="include_specific_characters">Include Specific Characters</label>
                 <input type="text" id="include_specific_characters" name="include_specific_characters"
                     placeholder="Seperate with spaces">
             </div>
             <!-- Exclude Characters Input -->
-            <div>
+            <div class="settingContainer">
                 <label for="exclude_specific_characters">Exclude Specific Characters</label>
                 <input type="text" id="exclude_specific_characters" name="exclude_specific_characters"
                     placeholder="Seperate with spaces">
             </div>
             <!-- Save Settings Checkbox -->
-            <div class="checkbox">
+            <div class="settingContainer checkbox">
                 <label for="save_settings">Save settings to this browser</label>
                 <label class="switch">
                     <input type="checkbox" id="save_settings" name="save_settings" checked>
