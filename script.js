@@ -1,8 +1,7 @@
 window.onload = function () {
   // Main variables
   const passwordInput = document.getElementById("password_input"),
-    passwordGenerateButton = document.getElementById("password_button"),
-    settingsButton = document.getElementById("settings_button");
+    passwordGenerateButton = document.getElementById("password_button")
 
   // Settings variables
   const passwordLength = document.getElementById("password_length"),
@@ -70,18 +69,6 @@ window.onload = function () {
         },
         { once: true }
       ); // Ensure the event listener only runs once
-    }
-  });
-
-  // Settings button logic
-  let settingsToggle = false;
-  settingsButton.addEventListener("click", function () {
-    if (settingsToggle == false) {
-      settingsToggle = true;
-      document.getElementById("settings_container").style.height = "20rem";
-    } else {
-      settingsToggle = false;
-      document.getElementById("settings_container").style.height = "0rem";
     }
   });
 

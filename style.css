@@ -81,7 +81,7 @@ textarea:focus {
 
 #content_container {
   color: white;
-  width: 35%;
+  width: 40%;
   height: 100%;
   margin: 0 auto;
   background-color: #1d1d1d;
@@ -146,14 +146,25 @@ textarea:focus {
   flex-direction: row;
   justify-content: space-between; /* Align horizontal */
   align-items: center; /* Align vertical */
-  background-color: #2b2b2b;
+  background-color: #2b2b2b96;
   padding: 1rem;
   border-radius: 0.3rem;
   margin-bottom: 0;
 }
 
+
+.settingContainer .textInput {
+  flex: 1; /* Take up all available space */
+  
+}
+
+.textInput {
+  
+  height: 100%;
+}
+
+
 footer {
-  margin-top: auto;
   font-family: "IBMPlexMono";
 }
 
