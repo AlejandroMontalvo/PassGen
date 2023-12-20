@@ -1,7 +1,7 @@
 window.onload = function () {
   // Main variables
   const passwordInput = document.getElementById("password_input"),
-    passwordGenerateButton = document.getElementById("password_button")
+    passwordGenerateButton = document.getElementById("password_button");
 
   // Settings variables
   const passwordLength = document.getElementById("password_length"),
@@ -40,11 +40,6 @@ window.onload = function () {
 
   passwordGenerateButton.addEventListener("click", function () {
     passwordInput.value = generatePassword(settingsArray);
-  });
-
-  // Add click event listener to password input
-  passwordInput.addEventListener("click", function () {
-    copyPasswordToClipboard();
   });
 
   // Function to copy password to clipboard
@@ -213,7 +208,7 @@ function setDefaultSettings(settingsArray) {
   settingsArray[2].checked = true;
   settingsArray[3].checked = true;
   settingsArray[4].checked = true;
-  settingsArray[5].checked = false;
+  settingsArray[5].checked = true;
   settingsArray[6].value = "";
   settingsArray[7].value = "";
   settingsArray[8].checked = false;

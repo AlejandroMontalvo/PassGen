@@ -15,87 +15,91 @@
 </head>
 
 <body>
-    <div id="content_container">
-        <header>
-            <img id="logo" src="./imgs/favicon.svg" alt="Favicon">
-            <h1>LOCKSMITH</h1>
-        </header>
-        <div id="copied_popup">Copied!</div>
-        <input type="text" id="password_input" name="password_input" autocomplete='off' readonly>
-        <button id="password_button">Generate Password</button><br>
-        <div id="settings_variables">
-            <!-- Password Length Input-->
-            <div class="settingContainer">
-                <label for="password_length">Password Length</label>
+    <div id="container">
+        <div id="content_container">
+            <header>
+                <img id="logo" src="./imgs/favicon.svg" alt="Favicon">
+                <h1>LOCKSMITH</h1>
+            </header>
+            <div id="copied_popup">Copied!</div>
+            <input type="text" id="password_input" name="password_input" autocomplete='off' readonly>
+            <button id="password_button">Generate Password</button><br>
+            <div id="settings_variables">
+                <!-- Password Length Input-->
+                <div class="settingContainer">
+                    <label for="password_length">Password Length</label>
 
-                <input class="textInput" type="number" id="password_length" name="password_length" value="16">
-                </label>
+                    <input class="textInput" type="number" id="password_length" name="password_length" value="16"
+                        min="1" max="2048">
+                    </label>
+                </div>
+                <!-- Lowercase Letters Checkbox -->
+                <div class=" settingContainer checkbox">
+                    <label for="include_lowercase_letters">Include lowercase letters</label>
+                    <label class="switch">
+                        <input type="checkbox" id="include_lowercase_letters" name="include_lowercase_letters" checked>
+                        <span class="slider round"></span>
+                    </label>
+                </div>
+                <!-- Uppercase Letters Checkbox -->
+                <div class="settingContainer checkbox">
+                    <label for="include_uppercase_letters">Include uppercase letters</label>
+                    <label class="switch">
+                        <input type="checkbox" id="include_uppercase_letters" name="include_uppercase_letters" checked>
+                        <span class="slider round"></span>
+                    </label>
+                </div>
+                <!-- Numbers Checkbox -->
+                <div class="settingContainer checkbox">
+                    <label for="include_numbers">Include numbers</label>
+                    <label class="switch">
+                        <input type="checkbox" id="include_numbers" name="include_numbers" checked>
+                        <span class="slider round"></span>
+                    </label>
+                </div>
+                <!-- Symbols Checkbox -->
+                <div class="settingContainer checkbox">
+                    <label for="include_symbols">Include symbols</label>
+                    <label class="switch">
+                        <input type="checkbox" id="include_symbols" name="include_symbols" checked>
+                        <span class="slider round"></span>
+                    </label>
+                </div>
+                <!-- Exclude Similar Checkbox -->
+                <div class="settingContainer checkbox">
+                    <label for="exclude_similar_characters">Exclude similar characters ( e.g. 1l5S8BO0 )</label>
+                    <label class="switch">
+                        <input type="checkbox" id="exclude_similar_characters" name="exclude_similar_characters"
+                            checked>
+                        <span class="slider round"></span>
+                    </label>
+                </div>
+                <!-- Include Characters Input -->
+                <div class="settingContainer">
+                    <label for="include_specific_characters">Include Specific Characters</label>
+                    <input class="textInput" type="text" id="include_specific_characters"
+                        name="include_specific_characters" placeholder="Seperate with spaces">
+                </div>
+                <!-- Exclude Characters Input -->
+                <div class="settingContainer">
+                    <label for="exclude_specific_characters">Exclude Specific Characters</label>
+                    <input class="textInput" type="text" id="exclude_specific_characters"
+                        name="exclude_specific_characters" placeholder="Seperate with spaces">
+                </div>
+                <!-- Save Settings Checkbox -->
+                <div class="settingContainer checkbox">
+                    <label for="save_settings">Save settings to this browser</label>
+                    <label class="switch">
+                        <input type="checkbox" id="save_settings" name="save_settings">
+                        <span class="slider round"></span>
+                    </label>
+                </div>
             </div>
-            <!-- Lowercase Letters Checkbox -->
-            <div class="settingContainer checkbox">
-                <label for="include_lowercase_letters">Include lowercase letters</label>
-                <label class="switch">
-                    <input type="checkbox" id="include_lowercase_letters" name="include_lowercase_letters" checked>
-                    <span class="slider round"></span>
-                </label>
-            </div>
-            <!-- Uppercase Letters Checkbox -->
-            <div class="settingContainer checkbox">
-                <label for="include_uppercase_letters">Include uppercase letters</label>
-                <label class="switch">
-                    <input type="checkbox" id="include_uppercase_letters" name="include_uppercase_letters" checked>
-                    <span class="slider round"></span>
-                </label>
-            </div>
-            <!-- Numbers Checkbox -->
-            <div class="settingContainer checkbox">
-                <label for="include_numbers">Include numbers</label>
-                <label class="switch">
-                    <input type="checkbox" id="include_numbers" name="include_numbers" checked>
-                    <span class="slider round"></span>
-                </label>
-            </div>
-            <!-- Symbols Checkbox -->
-            <div class="settingContainer checkbox">
-                <label for="include_symbols">Include symbols</label>
-                <label class="switch">
-                    <input type="checkbox" id="include_symbols" name="include_symbols" checked>
-                    <span class="slider round"></span>
-                </label>
-            </div>
-            <!-- Exclude Similar Checkbox -->
-            <div class="settingContainer checkbox">
-                <label for="exclude_similar_characters">Exclude similar characters ( e.g. 1il5S8BO0 )</label>
-                <label class="switch">
-                    <input type="checkbox" id="exclude_similar_characters" name="exclude_similar_characters" checked>
-                    <span class="slider round"></span>
-                </label>
-            </div>
-            <!-- Include Characters Input -->
-            <div class="settingContainer">
-                <label for="include_specific_characters">Include Specific Characters</label>
-                <input type="text" id="include_specific_characters" name="include_specific_characters"
-                    placeholder="Seperate with spaces">
-            </div>
-            <!-- Exclude Characters Input -->
-            <div class="settingContainer">
-                <label for="exclude_specific_characters">Exclude Specific Characters</label>
-                <input type="text" id="exclude_specific_characters" name="exclude_specific_characters"
-                    placeholder="Seperate with spaces">
-            </div>
-            <!-- Save Settings Checkbox -->
-            <div class="settingContainer checkbox">
-                <label for="save_settings">Save settings to this browser</label>
-                <label class="switch">
-                    <input type="checkbox" id="save_settings" name="save_settings" checked>
-                    <span class="slider round"></span>
-                </label>
-            </div>
+            <footer>
+                <p>Passwords are not recorded, uploaded, or otherwise stored.</p>
+                <a href="https://github.com/AlejandroMontalvo/PassGen" title="Github Repository"><img width="35px"
+                        src="./imgs/github.svg" alt="Github Repository"></a>
+            </footer>
         </div>
-        <footer>
-            <p>Passwords are not recorded, uploaded, or otherwise stored.</p>
-            <a href="https://github.com/AlejandroMontalvo/PassGen" title="Github Repository"><img width="35px"
-                    src="./imgs/github.svg" alt="Github Repository"></a>
-        </footer>
     </div>
 </body>
