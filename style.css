@@ -73,15 +73,21 @@ textarea:focus {
   transition: 0.2s ease-in-out;
 }
 
-header {
-  display: flex;
-  align-items: center;
-  text-align: center;
+#content {
+  height: max-content;
   width: 100%;
-  justify-content: center;
+  padding: 1rem;
+  background-color: #1d1d1d;
 }
 
-h1 {
+header {
+  width: 100%;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+}
+
+header h1 {
   font-family: "Roboto";
   letter-spacing: 3px;
   font-weight: 300;
@@ -90,13 +96,6 @@ h1 {
 #logo {
   margin-right: 10px;
   width: 32px;
-}
-
-#content_container {
-  color: white;
-  width: 100%;
-  height: fit-content;
-  padding: 1rem;
 }
 
 #password_input {
@@ -141,10 +140,9 @@ label {
 #settings_variables {
   display: inline-flex;
   flex-direction: column;
-  justify-content: space-around;
+  justify-content: space-evenly;
   color: white;
   vertical-align: middle;
-  height: 100%;
   gap: 10px;
   width: 100%;
   margin: 0 auto;
@@ -274,5 +272,9 @@ input:checked + .slider:before {
 @media only screen and (max-width: 800px) {
   #container {
     width: 100%;
+  }
+
+  .settingContainer label {
+    font-size: 0.7rem;
   }
 }
