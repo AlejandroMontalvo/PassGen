@@ -1,31 +1,18 @@
-@font-face {
-  font-family: "IBMPlexMono";
-  src: url("./fonts/IBMPlexMono-Regular.ttf");
-  font-weight: 400;
-}
+@import url("./fonts.css");
 
-@font-face {
-  font-family: "Roboto";
-  src: url("./fonts/RobotoMono-Regular.ttf");
-  font-weight: 400;
-}
-
-@font-face {
-  font-family: "Roboto";
-  src: url("./fonts/RobotoMono-Light.ttf");
-  font-weight: 300;
+:root {
+  --switch-size: 54px; /* Adjust this variable to change the size of the switch */
 }
 
 *,
 *:before,
 *:after {
-  box-sizing: inherit;
+  box-sizing: border-box;
 }
 
 html {
   height: 100%;
   width: 100%;
-  box-sizing: border-box;
 }
 
 body {
@@ -181,10 +168,6 @@ label {
 footer {
   font-family: "IBMPlexMono";
   text-align: center;
-}
-
-:root {
-  --switch-size: 54px; /* Adjust this variable to change the size of the switch */
 }
 
 .switch {
