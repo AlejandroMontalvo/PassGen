@@ -5,13 +5,23 @@ window.onload = function () {
 
   // Settings variables
   const passwordLength = document.getElementById("password_length"),
-    includeLowercaseLetters = document.getElementById("include_lowercase_letters"),
-    includeUppercaseLetters = document.getElementById("include_uppercase_letters"),
+    includeLowercaseLetters = document.getElementById(
+      "include_lowercase_letters"
+    ),
+    includeUppercaseLetters = document.getElementById(
+      "include_uppercase_letters"
+    ),
     includeNumbers = document.getElementById("include_numbers"),
     includeSymbols = document.getElementById("include_symbols"),
-    excludeSimilarCharacters = document.getElementById("exclude_similar_characters"),
-    includeSpecificCharacters = document.getElementById("include_specific_characters"),
-    excludeSpecificCharacters = document.getElementById("exclude_specific_characters"),
+    excludeSimilarCharacters = document.getElementById(
+      "exclude_similar_characters"
+    ),
+    includeSpecificCharacters = document.getElementById(
+      "include_specific_characters"
+    ),
+    excludeSpecificCharacters = document.getElementById(
+      "exclude_specific_characters"
+    ),
     saveSettings = document.getElementById("save_settings");
 
   let settingsArray = [
@@ -51,7 +61,8 @@ window.onload = function () {
     passwordLength.value = length;
   }
 
-  validatePasswordLength()
+  validatePasswordLength();
+
   // Function to copy password to clipboard
   let copiedPopup = document.getElementById("copied_popup");
 
@@ -184,7 +195,10 @@ function generatePassword(settingsArray) {
 // Function to save settings to local storage
 function setSettings(settingsArray) {
   settingsArray.forEach((setting, index) => {
-    localStorage.setItem(setting.id, index === 0 ? setting.value : setting.checked);
+    localStorage.setItem(
+      setting.id,
+      index === 0 ? setting.value : setting.checked
+    );
   });
 }
 
