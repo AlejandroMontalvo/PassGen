@@ -44,7 +44,7 @@ textarea:focus {
   background-color: #1d1d1d;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: center;
   gap: 1.2rem;
 }
 
@@ -94,7 +94,7 @@ header h1 {
   font-size: 1.2rem;
   padding: 0.5rem;
   border: 0px;
-  background: #2b2b2b;
+  background: transparent;
   border-radius: 0.2rem;
   color: white;
   text-align: center;
@@ -106,6 +106,12 @@ header h1 {
   -webkit-user-select: none;
   cursor: pointer;
   letter-spacing: 1.5px;
+  border: 1px solid rgba(255, 255, 255, 0.397);
+  transition: 0.2s ease-in-out;
+}
+
+#password_input:hover {
+  border: 1px solid white;
 }
 
 #password_button {
@@ -118,6 +124,7 @@ header h1 {
   color: white;
   width: 100%;
   font-family: "IBMPlexMono";
+  transition: 0.2s ease-in-out;
 }
 
 #password_button:hover {
@@ -142,7 +149,7 @@ label {
 }
 
 .settingContainer {
-  height: 3.5rem;
+  height: 3.6rem;
   display: flex;
   flex-direction: row;
   justify-content: space-between; /* Align horizontal */

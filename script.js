@@ -36,6 +36,13 @@ window.onload = function () {
     saveSettings, //8
   ];
 
+  // If local storage has data, get saved settings, else fall back to default settings
+  if (localStorage.length > 0) {
+    getSettings(settingsArray);
+  } else {
+    setDefaultSettings(settingsArray);
+  }
+
   passwordInput.value = generatePassword(settingsArray);
 
   passwordGenerateButton.addEventListener("click", function () {
@@ -96,13 +103,6 @@ window.onload = function () {
       localStorage.clear();
     }
   });
-
-  // If local storage has data, get saved settings, else fall back to default settings
-  if (localStorage.length > 0) {
-    getSettings(settingsArray);
-  } else {
-    setDefaultSettings(settingsArray);
-  }
 };
 
 // Determine which characters are available for generation based on user settings
