@@ -5,23 +5,13 @@ window.onload = function () {
 
   // Settings variables
   const passwordLength = document.getElementById("password_length"),
-    includeLowercaseLetters = document.getElementById(
-      "include_lowercase_letters"
-    ),
-    includeUppercaseLetters = document.getElementById(
-      "include_uppercase_letters"
-    ),
+    includeLowercaseLetters = document.getElementById("include_lowercase_letters"),
+    includeUppercaseLetters = document.getElementById("include_uppercase_letters"),
     includeNumbers = document.getElementById("include_numbers"),
     includeSymbols = document.getElementById("include_symbols"),
-    excludeSimilarCharacters = document.getElementById(
-      "exclude_similar_characters"
-    ),
-    includeSpecificCharacters = document.getElementById(
-      "include_specific_characters"
-    ),
-    excludeSpecificCharacters = document.getElementById(
-      "exclude_specific_characters"
-    ),
+    excludeSimilarCharacters = document.getElementById("exclude_similar_characters"),
+    includeSpecificCharacters = document.getElementById("include_specific_characters"),
+    excludeSpecificCharacters = document.getElementById("exclude_specific_characters"),
     saveSettings = document.getElementById("save_settings");
 
   let settingsArray = [
@@ -42,6 +32,26 @@ window.onload = function () {
     passwordInput.value = generatePassword(settingsArray);
   });
 
+  passwordLength.addEventListener("blur", validatePasswordLength);
+  passwordLength.addEventListener("keyup", function (event) {
+    if (event.key === "Enter") {
+      validatePasswordLength();
+    }
+  });
+
+  function validatePasswordLength() {
+    let length = parseInt(passwordLength.value);
+
+    if (isNaN(length) || length < 1) {
+      length = 1;
+    } else if (length > 2048) {
+      length = 2048;
+    }
+
+    passwordLength.value = length;
+  }
+
+  validatePasswordLength()
   // Function to copy password to clipboard
   let copiedPopup = document.getElementById("copied_popup");
 
@@ -68,19 +78,15 @@ window.onload = function () {
   });
 
   // If enabled, save settings to local storage before page/browser close
-  window.addEventListener(
-    "beforeunload",
-    function () {
-      if (saveSettings.checked) {
-        setSettings(settingsArray);
-      } else {
-        localStorage.clear();
-      }
-    },
-    false
-  );
+  window.addEventListener("beforeunload", function () {
+    if (saveSettings.checked) {
+      setSettings(settingsArray);
+    } else {
+      localStorage.clear();
+    }
+  });
 
-  // If local storage has data, get saved settings, else fall back to defualt settings
+  // If local storage has data, get saved settings, else fall back to default settings
   if (localStorage.length > 0) {
     getSettings(settingsArray);
   } else {
@@ -175,33 +181,25 @@ function generatePassword(settingsArray) {
   return generatedPassword;
 }
 
+// Function to save settings to local storage
 function setSettings(settingsArray) {
-  localStorage.setItem("passwordLength", settingsArray[0].value);
-  localStorage.setItem("includeLowercaseLetters", settingsArray[1].checked);
-  localStorage.setItem("includeUppercaseLetters", settingsArray[2].checked);
-  localStorage.setItem("includeNumbers", settingsArray[3].checked);
-  localStorage.setItem("includeSymbols", settingsArray[4].checked);
-  localStorage.setItem("excludeSimilarCharacters", settingsArray[5].checked);
-  localStorage.setItem("includeSpecificCharacters", settingsArray[6].value);
-  localStorage.setItem("excludeSpecificCharacters", settingsArray[7].value);
-  localStorage.setItem("saveSettings", settingsArray[8].checked);
+  settingsArray.forEach((setting, index) => {
+    localStorage.setItem(setting.id, index === 0 ? setting.value : setting.checked);
+  });
 }
 
+// Function to retrieve settings from local storage
 function getSettings(settingsArray) {
-  settingsArray[0].value = localStorage.getItem("passwordLength");
-  settingsArray[1].checked =
-    localStorage.getItem("includeLowercaseLetters") === "true";
-  settingsArray[2].checked =
-    localStorage.getItem("includeUppercaseLetters") === "true";
-  settingsArray[3].checked = localStorage.getItem("includeNumbers") === "true";
-  settingsArray[4].checked = localStorage.getItem("includeSymbols") === "true";
-  settingsArray[5].checked =
-    localStorage.getItem("excludeSimilarCharacters") === "true";
-  settingsArray[6].value = localStorage.getItem("includeSpecificCharacters");
-  settingsArray[7].value = localStorage.getItem("excludeSpecificCharacters");
-  settingsArray[8].checked = localStorage.getItem("saveSettings") === "true";
+  settingsArray.forEach((setting, index) => {
+    if (index === 0) {
+      setting.value = localStorage.getItem(setting.id);
+    } else {
+      setting.checked = localStorage.getItem(setting.id) === "true";
+    }
+  });
 }
 
+// Function to set default settings
 function setDefaultSettings(settingsArray) {
   settingsArray[0].value = 16;
   settingsArray[1].checked = true;
