@@ -48,6 +48,8 @@ textarea:focus {
   justify-content: center;
   gap: 1.2rem;
   transition: 0.2s ease-in-out;
+  position: sticky; /* Add this */
+  top: 0; /* Adjust this value as needed */
 }
 
 header {
