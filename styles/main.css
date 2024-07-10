@@ -192,6 +192,7 @@ footer {
   position: relative;
   display: inline-block;
   width: var(--switch-size);
+  min-width: var(--switch-size);
   height: calc(
     var(--switch-size) * 0.566666
   ); /* Maintain aspect ratio for height */
