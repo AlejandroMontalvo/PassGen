@@ -260,14 +260,11 @@ input:checked + .slider:before {
 }
 
 @media only screen and (max-width: 1600px) {
-  #content {
-    width: 100%;
-  }
 }
 
 @media only screen and (max-width: 1200px) {
-  #content {
-    width: 100%;
+  #container {
+    width: 80%;
   }
 
   .settingContainer label {
