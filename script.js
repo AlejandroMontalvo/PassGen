@@ -1,227 +1,197 @@
-window.onload = function () {
-  // Main variables
-  const passwordInput = document.getElementById("password_input"),
-    passwordGenerateButton = document.getElementById("password_button");
+document.addEventListener("DOMContentLoaded", function () {
+  // DOM elements
+  const passwordInput = document.getElementById("password_input");
+  const passwordGenerateButton = document.getElementById("password_button");
+  const settings = {
+    length: document.getElementById("password_length"),
+    includeLowercase: document.getElementById("include_lowercase_letters"),
+    includeUppercase: document.getElementById("include_uppercase_letters"),
+    includeNumbers: document.getElementById("include_numbers"),
+    includeSymbols: document.getElementById("include_symbols"),
+    excludeSimilar: document.getElementById("exclude_similar_characters"),
+    includeSpecific: document.getElementById("include_specific_characters"),
+    excludeSpecific: document.getElementById("exclude_specific_characters"),
+    saveSettings: document.getElementById("save_settings"),
+  };
 
-  // Settings variables
-  const passwordLength = document.getElementById("password_length"),
-    includeLowercaseLetters = document.getElementById(
-      "include_lowercase_letters"
-    ),
-    includeUppercaseLetters = document.getElementById(
-      "include_uppercase_letters"
-    ),
-    includeNumbers = document.getElementById("include_numbers"),
-    includeSymbols = document.getElementById("include_symbols"),
-    excludeSimilarCharacters = document.getElementById(
-      "exclude_similar_characters"
-    ),
-    includeSpecificCharacters = document.getElementById(
-      "include_specific_characters"
-    ),
-    excludeSpecificCharacters = document.getElementById(
-      "exclude_specific_characters"
-    ),
-    saveSettings = document.getElementById("save_settings");
+  // Initialize settings
+  const defaultSettings = {
+    length: 16,
+    includeLowercase: true,
+    includeUppercase: true,
+    includeNumbers: true,
+    includeSymbols: true,
+    excludeSimilar: true,
+    includeSpecific: "",
+    excludeSpecific: "",
+    saveSettings: false,
+  };
 
-  let settingsArray = [
-    passwordLength, //0
-    includeLowercaseLetters, //1
-    includeUppercaseLetters, //2
-    includeNumbers, //3
-    includeSymbols, //4
-    excludeSimilarCharacters, //5
-    includeSpecificCharacters, //6
-    excludeSpecificCharacters, //7
-    saveSettings, //8
-  ];
+  loadSettings();
 
-  // If local storage has data, get saved settings, else fall back to default settings
-  if (localStorage.length > 0) {
-    getSettings(settingsArray);
-  } else {
-    setDefaultSettings(settingsArray);
-  }
+  // Generate password on load and button click
+  generateAndDisplayPassword();
+  passwordGenerateButton.addEventListener("click", generateAndDisplayPassword);
 
-  passwordInput.value = generatePassword(settingsArray);
-
-  passwordGenerateButton.addEventListener("click", function () {
-    passwordInput.value = generatePassword(settingsArray);
-  });
-
-  passwordLength.addEventListener("blur", validatePasswordLength);
-  passwordLength.addEventListener("keyup", function (event) {
+  // Validate password length on blur and Enter key press
+  settings.length.addEventListener("blur", validatePasswordLength);
+  settings.length.addEventListener("keyup", function (event) {
     if (event.key === "Enter") {
       validatePasswordLength();
     }
   });
 
   function validatePasswordLength() {
-    let length = parseInt(passwordLength.value);
-
+    let length = parseInt(settings.length.value);
     if (isNaN(length) || length < 1) {
       length = 1;
     } else if (length > 2048) {
       length = 2048;
     }
-
-    passwordLength.value = length;
+    settings.length.value = length;
   }
 
-  validatePasswordLength();
+  function generateAndDisplayPassword() {
+    passwordInput.value = generatePassword();
+  }
 
-  // Function to copy password to clipboard
-  let copiedPopup = document.getElementById("copied_popup");
+  function generatePassword() {
+    let characterSet = "";
 
-  passwordInput.addEventListener("click", function (event) {
+    // Include characters based on settings
+    if (settings.includeLowercase.checked) {
+      characterSet += "abcdefghijklmnopqrstuvwxyz";
+    }
+    if (settings.includeUppercase.checked) {
+      characterSet += "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    }
+    if (settings.includeNumbers.checked) {
+      characterSet += "1234567890";
+    }
+    if (settings.includeSymbols.checked) {
+      characterSet += "!@#$%";
+    }
+
+    // Exclude similar characters if enabled
+    if (settings.excludeSimilar.checked) {
+      const similarCharacters = [
+        "1",
+        "i",
+        "l",
+        "5",
+        "S",
+        "8",
+        "B",
+        "o",
+        "O",
+        "0",
+      ];
+      similarCharacters.forEach((char) => {
+        characterSet = characterSet.replace(new RegExp(char, "g"), "");
+      });
+    }
+
+    // Include specific characters
+    if (settings.includeSpecific.value) {
+      characterSet += settings.includeSpecific.value.replace(/\s/g, "");
+    }
+
+    // Exclude specific characters
+    if (settings.excludeSpecific.value) {
+      settings.excludeSpecific.value.split(/\s+/).forEach((char) => {
+        characterSet = characterSet.replace(new RegExp(char, "g"), "");
+      });
+    }
+
+    // Generate password
+    let generatedPassword = "";
+    for (let i = 0; i < parseInt(settings.length.value); ++i) {
+      generatedPassword += characterSet.charAt(
+        Math.floor(Math.random() * characterSet.length)
+      );
+    }
+
+    return generatedPassword;
+  }
+
+  // Copy password to clipboard on click
+  passwordInput.addEventListener("click", function (mouseEvent) {
     if (passwordInput.value) {
       navigator.clipboard.writeText(passwordInput.value);
-      // Calculate the position based on the mouse coordinates
-      let mouseX = event.clientX;
-      let mouseY = event.clientY;
-
-      // Set the position of the copied popup
-      copiedPopup.style.left = mouseX + 15 + "px"; // Adjust the offset as needed
-      copiedPopup.style.top = mouseY + -25 + "px";
-
-      copiedPopup.style.display = "block";
-      copiedPopup.addEventListener(
-        "animationend",
-        function () {
-          copiedPopup.style.display = "none";
-        },
-        { once: true }
-      ); // Ensure the event listener only runs once
+      showCopiedPopup(mouseEvent);
     }
   });
 
-  // If enabled, save settings to local storage before page/browser close
+  function showCopiedPopup(mouseEvent) {
+    const copiedPopup = document.getElementById("copied_popup");
+    // Calculate the position based on the mouse coordinates
+    let mouseX = mouseEvent.clientX;
+    let mouseY = mouseEvent.clientY;
+
+    // Set the position of the copied popup
+    copiedPopup.style.left = mouseX + 15 + "px"; // Adjust the offset as needed
+    copiedPopup.style.top = mouseY + -25 + "px";
+
+    copiedPopup.style.display = "block";
+    copiedPopup.addEventListener(
+      "animationend",
+      function () {
+        copiedPopup.style.display = "none";
+      },
+      { once: true }
+    ); // Ensure the event listener only runs once
+  }
+
+  // Save settings to localStorage before unload if enabled
   window.addEventListener("beforeunload", function () {
-    if (saveSettings.checked) {
-      setSettings(settingsArray);
+    if (settings.saveSettings.checked) {
+      saveSettings();
     } else {
       localStorage.clear();
     }
   });
-};
 
-// Determine which characters are available for generation based on user settings
-function generateCharacterString(settingsArray) {
-  let generatedString = "";
-
-  const lowercaseLetters = "abcdefghijklmnopqrstuvwxyz",
-    uppercaseLetters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
-    numbers = "1234567890",
-    symbols = "!@#$%",
-    similarCharactersArray = ["1", "i", "l", "5", "S", "8", "B", "o", "O", "0"];
-
-  if (settingsArray[1].checked) {
-    generatedString += lowercaseLetters;
+  function saveSettings() {
+    Object.keys(settings).forEach((key) => {
+      if (key === "length") {
+        localStorage.setItem(key, settings[key].value);
+      } else if (key === "includeSpecific" || key === "excludeSpecific") {
+        localStorage.setItem(key, settings[key].value);
+      } else {
+        localStorage.setItem(key, settings[key].checked);
+      }
+    });
   }
 
-  if (settingsArray[2].checked) {
-    generatedString += uppercaseLetters;
-  }
-
-  if (settingsArray[3].checked) {
-    generatedString += numbers;
-  }
-
-  if (settingsArray[4].checked) {
-    generatedString += symbols;
-  }
-
-  if (settingsArray[5].checked) {
-    for (var i = 0; i < similarCharactersArray.length; i++) {
-      generatedString = generatedString.replace(similarCharactersArray[i], "");
-    }
-  }
-
-  if (settingsArray[6].value) {
-    let includeCharactersArray = settingsArray[6].value.split(" ");
-    for (var i = 0; i < includeCharactersArray.length; i++) {
-      generatedString += includeCharactersArray[i];
-    }
-  }
-
-  if (settingsArray[7].value) {
-    let excludeCharactersArray = settingsArray[7].value.split(" ");
-    for (var i = 0; i < excludeCharactersArray.length; i++) {
-      generatedString = generatedString.replace(excludeCharactersArray[i], "");
-    }
-  }
-
-  return generatedString;
-}
-
-function generatePassword(settingsArray) {
-  let passwordCharacters = generateCharacterString(settingsArray),
-    generatedPassword = "";
-
-  for (let i = 0; i < settingsArray[0].value; ++i) {
-    generatedPassword += passwordCharacters.charAt(
-      Math.random() * passwordCharacters.length
-    );
-  }
-
-  if (settingsArray[6].value) {
-    let includeCharactersArray = settingsArray[6].value.split(" ");
-    let generatedPasswordArray = generatedPassword.split("");
-    let previousArrayPosition = [];
-
-    for (let i = 0; i < includeCharactersArray.length; i++) {
-      let randomArrayPosition = Math.floor(
-        Math.random() * generatedPasswordArray.length
-      );
-
-      if (previousArrayPosition.includes(randomArrayPosition)) {
-        for (let j = 0; j < generatedPasswordArray.length; j++) {
-          if (!previousArrayPosition.includes(j)) {
-            randomArrayPosition = j;
+  function loadSettings() {
+    if (localStorage.length > 0) {
+      console.log("localStorage exists:", localStorage); // Check current localStorage contents
+      Object.keys(settings).forEach((key) => {
+        const value = localStorage.getItem(key);
+        console.log(`Loaded ${key} from localStorage:`, value); // Log each loaded setting
+        if (value !== null) {
+          if (
+            key === "length" ||
+            key === "includeSpecific" ||
+            key === "excludeSpecific"
+          ) {
+            settings[key].value = value;
+          } else {
+            settings[key].checked = value === "true"; // Convert "true"/"false" string to boolean
           }
         }
-      }
-      generatedPassword = generatedPassword.replace(
-        generatedPasswordArray[randomArrayPosition],
-        includeCharactersArray[i].toString()
-      );
-      previousArrayPosition.push(randomArrayPosition);
+      });
+    } else {
+      console.log("localStorage is empty or not available.");
+      setDefaultSettings();
     }
+    validatePasswordLength();
   }
 
-  return generatedPassword;
-}
-
-// Function to save settings to local storage
-function setSettings(settingsArray) {
-  settingsArray.forEach((setting, index) => {
-    localStorage.setItem(
-      setting.id,
-      index === 0 ? setting.value : setting.checked
-    );
-  });
-}
-
-// Function to retrieve settings from local storage
-function getSettings(settingsArray) {
-  settingsArray.forEach((setting, index) => {
-    if (index === 0) {
-      setting.value = localStorage.getItem(setting.id);
-    } else {
-      setting.checked = localStorage.getItem(setting.id) === "true";
-    }
-  });
-}
-
-// Function to set default settings
-function setDefaultSettings(settingsArray) {
-  settingsArray[0].value = 16;
-  settingsArray[1].checked = true;
-  settingsArray[2].checked = true;
-  settingsArray[3].checked = true;
-  settingsArray[4].checked = true;
-  settingsArray[5].checked = true;
-  settingsArray[6].value = "";
-  settingsArray[7].value = "";
-  settingsArray[8].checked = false;
-}
+  function setDefaultSettings() {
+    Object.keys(defaultSettings).forEach((key) => {
+      settings[key][key === "length" ? "value" : "checked"] =
+        defaultSettings[key];
+    });
+  }
+});
