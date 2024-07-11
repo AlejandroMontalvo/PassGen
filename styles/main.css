@@ -33,7 +33,7 @@ textarea:focus {
   background-color: #1d1d1d;
   min-height: 100vh; /* Ensure container fills the viewport height */
   margin: 0 auto;
-  width: 50%;
+  width: 40%;
 }
 
 #content {
@@ -46,7 +46,6 @@ textarea:focus {
   gap: 1.2rem;
   overflow: auto; /* Enable scrolling if content exceeds container */
   flex-shrink: 0; /* Prevent content from shrinking */
-  max-width: 700px;
 }
 
 #password_container {
@@ -260,6 +259,9 @@ input:checked + .slider:before {
 }
 
 @media only screen and (max-width: 1600px) {
+  #container {
+    width: 50%;
+  }
 }
 
 @media only screen and (max-width: 1200px) {
