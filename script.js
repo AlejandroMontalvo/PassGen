@@ -125,8 +125,8 @@ document.addEventListener("DOMContentLoaded", function () {
   function showCopiedPopup(mouseEvent) {
     const copiedPopup = document.getElementById("copied_popup");
     // Calculate the position based on the mouse coordinates
-    let mouseX = mouseEvent.clientX;
-    let mouseY = mouseEvent.clientY;
+    let mouseX = mouseEvent.pageX;
+    let mouseY = mouseEvent.pageY;
 
     // Set the position of the copied popup
     copiedPopup.style.left = mouseX + 15 + "px"; // Adjust the offset as needed
