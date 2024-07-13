@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", function () {
   // DOM elements
-  const passwordInput = document.getElementById("password_input");
+  const passwordOutput = document.getElementById("password_output");
   const passwordGenerateButton = document.getElementById("password_button");
   const settings = {
     length: document.getElementById("password_length"),
@@ -52,7 +52,8 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function generateAndDisplayPassword() {
-    passwordInput.value = generatePassword();
+    passwordOutput.innerText = generatePassword();
+    highlightPasswordNumbers();
   }
 
   function generatePassword() {
@@ -114,11 +115,22 @@ document.addEventListener("DOMContentLoaded", function () {
     return generatedPassword;
   }
 
+  function highlightPasswordNumbers() {
+    const password = passwordOutput.innerText;
+    const highlightedPassword = password.replace(
+      /\d/g,
+      '<span style="color: #8A5DF4;">$&</span>'
+    );
+    passwordOutput.innerHTML = highlightedPassword;
+  }
+
   // Copy password to clipboard on click
-  passwordInput.addEventListener("click", function (mouseEvent) {
-    if (passwordInput.value) {
-      navigator.clipboard.writeText(passwordInput.value);
-      showCopiedPopup(mouseEvent);
+  passwordOutput.addEventListener("click", function (mouseEvent) {
+    const passwordText = passwordOutput.textContent;
+    if (passwordText) {
+      navigator.clipboard.writeText(passwordText).then(() => {
+        showCopiedPopup(mouseEvent);
+      });
     }
   });
 
