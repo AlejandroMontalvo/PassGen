@@ -16,7 +16,7 @@
 <body>
     <div id="container">
         <div id="content">
-            <div id="password_container">
+            <section id="password_container">
                 <header>
                     <img id="logo" src="./imgs/logo.svg" alt="logo">
                     <h1>LOCKSMITH</h1>
@@ -26,14 +26,13 @@
                     <div id="password_output"></div>
                     <button id="password_button">Generate Password</button>
                 </div>
-            </div>
-            <div id="settings_variables">
+            </section>
+            <section id="settings_variables">
                 <!-- Password Length Input-->
                 <div class="settingContainer">
                     <label for="password_length">Password Length</label>
                     <input class="textInput" type="number" id="password_length" name="password_length" value="16"
                         min="1" max="2048">
-                    </label>
                 </div>
                 <!-- Lowercase Letters Checkbox -->
                 <div class=" settingContainer checkbox">
@@ -95,7 +94,7 @@
                         <span class="slider round"></span>
                     </label>
                 </div>
-            </div>
+            </section>
             <footer>
                 <p>Passwords are not recorded, uploaded, or otherwise stored.</p>
                 <a href="https://github.com/AlejandroMontalvo/locksmith" title="Github Repository"><img width="35px"

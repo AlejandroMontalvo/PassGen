@@ -93,8 +93,10 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     // Include specific characters
+    let specificCharacters = "";
     if (settings.includeSpecific.value) {
-      characterSet += settings.includeSpecific.value.replace(/\s/g, "");
+      specificCharacters = settings.includeSpecific.value.replace(/\s/g, "");
+      characterSet += specificCharacters;
     }
 
     // Exclude specific characters
@@ -106,11 +108,24 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Generate password
     let generatedPassword = "";
-    for (let i = 0; i < parseInt(settings.length.value); ++i) {
+    for (
+      let i = 0;
+      i < parseInt(settings.length.value) - specificCharacters.length;
+      ++i
+    ) {
       generatedPassword += characterSet.charAt(
         Math.floor(Math.random() * characterSet.length)
       );
     }
+
+    // Ensure specific characters are included in the final password
+    generatedPassword += specificCharacters;
+
+    // Shuffle the final password to ensure randomness
+    generatedPassword = generatedPassword
+      .split("")
+      .sort(() => 0.5 - Math.random())
+      .join("");
 
     return generatedPassword;
   }
@@ -119,7 +134,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const password = passwordOutput.innerText;
     const highlightedPassword = password.replace(
       /\d/g,
-      '<span style="color: #8A5DF4;">$&</span>'
+      '<span class="highlight">$&</span>'
     );
     passwordOutput.innerHTML = highlightedPassword;
   }
